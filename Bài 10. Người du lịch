@@ -1,0 +1,35 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+ll n,ans=1e18,minn=1e18,used[1000],cmin=1e18;
+ll a[1000][1000];
+void nhap(){
+    cin>>n;
+    for(ll i=1;i<=n;i++){
+        for(ll j=1;j<=n;j++){
+            cin>>a[i][j];
+            if(a[i][j]!=0)cmin=min(cmin,a[i][j]);
+        }
+    }
+    memset(used,1,sizeof(used));
+}
+void back(ll i,ll sum,ll front){
+    if(i==n+1){
+        ans=min(ans,sum+a[front][1]);
+        return;
+    }
+    for(ll j=2;j<=n;j++){
+        if(used[j]){
+            sum+=a[j][front];
+            used[j]=0;
+            if(sum+(n-i+1)*cmin<ans)back(i+1,sum,j);
+            used[j]=1;
+            sum-=a[j][front];
+        }
+    }
+}
+int main(){
+    nhap();
+    back(2,0,1);
+    cout<<ans;
+}
