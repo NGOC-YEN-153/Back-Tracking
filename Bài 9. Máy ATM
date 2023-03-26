@@ -1,0 +1,25 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long  long
+ll n,s,a[1000],ans=1e18;
+void nhap(){
+    cin>>n>>s;for(ll i=0;i<n;i++)cin>>a[i];sort(a,a+n,greater<ll>());
+}
+void ATM(ll i,ll sum,ll start){
+    for(ll j=start;j<n;j++){
+        sum+=a[j];
+        if(sum==s){
+            ans=min(ans,i);
+        }
+        else if(sum<s){
+            ATM(i+1,sum,j+1);
+        }
+        sum-=a[j];
+    }
+}
+int main(){
+   nhap();
+   ATM(1,0,0);
+   if(ans!=1e18)cout<<ans;
+   else cout<<-1;
+}
