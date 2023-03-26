@@ -1,0 +1,38 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+int n,ok=0,k,a[1000];
+void inkq(int id,int X[] ){
+    cout<<"[";
+    for(int i=1;i<id;i++){
+        cout<<X[i]<<" ";
+    }
+    cout<<X[id]<<"]"<<endl;
+}
+void nhap(){
+    cin>>n>>k;
+    for(int i=1;i<=n;i++)cin>>a[i];
+}
+void Try(int i,int sum,int start,int X[]){
+    for(int j=start;j<=n;j++){
+        X[i]=a[j];sum+=a[j];
+        if(sum==k){
+            inkq(i,X);ok=1;sum-=a[j];continue;
+        }
+        if(sum<k && i<=n-1){
+            Try(i+1,sum,j+1,X);
+            sum-=a[j];continue;
+        }
+        if(sum>k){
+            sum-=a[j];
+            continue;
+        }
+    }
+}
+int main(){
+    nhap();
+    sort(a+1,a+n+1);
+    int X[1000];
+    Try(1,0,1,X);
+    if(!ok)cout<<"-1";
+}
