@@ -1,0 +1,30 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+ll n,a[100],used[30];
+vector<ll>v;
+void nhap(){
+    cin>>n;
+    memset(used,1,sizeof(used));
+}
+void back(ll i,ll sum,ll front){
+    if(i==n+1){
+        v.push_back(sum);
+        return;
+    }
+    for(ll j=1;j<=n;j++){
+        if(used[j] && abs(j-front)!=1){
+            sum=sum*10+j;
+            used[j]=0;
+            back(i+1,sum,j);
+            used[j]=1;
+            sum-=j;sum/=10;
+        }
+    }
+}
+int main(){
+   nhap();
+   back(1,0,-2);
+   sort(v.begin(),v.end());
+   for(auto x:v)cout<<x<<endl;
+}
